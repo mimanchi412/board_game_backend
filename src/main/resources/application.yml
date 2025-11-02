@@ -1,0 +1,45 @@
+spring:
+  application.name: board-game-backend
+  jackson.time-zone: Asia/Shanghai
+
+  # --- ????PostgreSQL? ---
+  datasource:
+    url: jdbc:postgresql://localhost:5432/board_game
+    username: postgres
+    password: 191599
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  # --- JPA???? Flyway ??Hibernate ??? ---
+  jpa:
+    hibernate.ddl-auto: validate
+    properties.hibernate:
+      format_sql: true
+      jdbc.time_zone: Asia/Shanghai
+    open-in-view: false
+
+  # --- Redis?JWT ?? ---
+  data.redis:
+    host: localhost
+    port: 6379
+
+  # --- Flyway ---
+  flyway:
+    enabled: true
+    locations: classpath:dbsql
+    baseline-on-migrate: true
+
+# ---- JWT ??????????? @Value ????? ----
+security:
+  jwt:
+    secret: "replace-with-a-random-32+bytes-secret-xxxxxxxxxxxxxxxxxxxxxxxx"  # ??
+    access-exp-minutes: 15   # AccessToken ???
+    refresh-exp-days: 7      # RefreshToken ????Redis TTL ?????
+
+server:
+  port: 8080
